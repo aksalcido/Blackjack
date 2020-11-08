@@ -1,0 +1,13 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Casino.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Blackjack.cpp
+C:\Users\19515\source\repos\Casino\Casino\Blackjack.cpp(71,20): warning C4018: '<': signed/unsigned mismatch
+  Card.cpp
+  Dealer.cpp
+  Deck.cpp
+C:\Users\19515\source\repos\Casino\Casino\Deck.cpp(50,21): warning C4018: '<': signed/unsigned mismatch
+  Hand.cpp
+  main.cpp
+  Player.cpp
+  User.cpp
+  Generating Code...
+  Casino.vcxproj -> C:\Users\19515\source\repos\Casino\Debug\Blackjack.exe
