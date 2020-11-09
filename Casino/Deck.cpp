@@ -49,7 +49,20 @@ void Deck::newDeck() {
 	for (int cardValue = 1; cardValue <= 13; cardValue++) {
 		for (int j = 0; j < suits.size(); j++) {
 			Suit suit = suits[j];
-			deck.push_back(new Card(suit, cardValue));
+			std::string cardName;
+			
+			if (cardValue == 1)
+				cardName = "Ace";
+			else if (cardValue == 11)
+				cardName = "Jack";
+			else if (cardValue == 12)
+				cardName = "Queen";
+			else if (cardValue == 13)
+				cardName = "King";
+			else
+				cardName = std::to_string(cardValue);
+
+			deck.push_back(new Card(suit, cardValue, cardName));
 		}
 	}
 }

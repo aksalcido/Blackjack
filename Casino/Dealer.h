@@ -6,6 +6,7 @@
 #include "Deck.h"
 #include <iostream>
 
+typedef std::pair<int, int> HandValue;
 
 class Dealer : public Player
 {
@@ -16,9 +17,6 @@ public:
 	
 	// Copy constructor for Dealer
 	Dealer(const Dealer& b);
-
-	// Deals the remaining cards to themselves based on their current score.
-	void dealRemainingCards();
 
 	// Resets the deck and shuffles it and called after a round ends in preparation for the next round
 	void resetAndShuffle();

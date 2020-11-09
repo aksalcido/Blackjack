@@ -10,10 +10,6 @@ Dealer::Dealer(const Dealer& b) : deck(b.deck) {
 
 }
 
-void Dealer::dealRemainingCards() {
-
-}
-
 void Dealer::resetAndShuffle() {
 	deck.restart();
 	deck.shuffle();

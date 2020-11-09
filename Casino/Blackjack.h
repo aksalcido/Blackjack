@@ -6,6 +6,10 @@
 #include "Dealer.h"
 #include "Display.h"
 
+/* Prompt Messages */
+const std::string INPUT_BET_MSG = "Please input your bet: ";
+const std::string MOVE_INPUT_MSG = "Input Move: 'hit' or 'h' || 'fold' or 'f':  ";
+
 
 const std::string USER_HIT = "hit";
 const std::string USER_FOLD = "fold";
@@ -36,8 +40,6 @@ public:
 	// Determines if the User or dealer wins. Funds are awarded or removed from User/Dealer depending on winner.
 	void determineWinner(const HandValue& userHand, int bet);
 
-	void results();
-
 	// Destructor
 	~Blackjack();
 
@@ -50,8 +52,17 @@ private:
 	int round;
 	bool gameover;
 
+	// Prompts the User for their 'bet', displays it and returns it to be used for the round
+	int placeBet();
+
+	// Prompts the User for their 'move', displays it and returns it to be used for the round
+	std::string getMove();
+
 	// Processes the round by checking if the user has broke, or if roundOver == true then checks who won between User and Dealer.
 	void processRound(const HandValue& userHand, int bet, bool& roundOver);
+
+	// After the User has chosen to fold, we deal the remaining cards to the Dealer
+	void dealDealersCards();
 
 	// Checks for Gameover by seeing if the User is bankrupt or not, if so then sets gameover == true.
 	void checkForGameover();
@@ -69,8 +80,8 @@ private:
 	// Returns a boolean True if the handValue passed exceeds the maximum of 21. False otherwise.
 	bool playerBroke(const HandValue& handValue);
 
-	// Returns a Result enum that determines the outcome of the round.
-	Result compare(const HandValue& userHand, const HandValue& dealerHand);
+	// Compares handOne to handTwo. The result is in regards to handOne, where if its higher than handTwo -> returns a Win, otherwise a Loss or Tie.
+	Result compare(const HandValue& handOne, const HandValue& handTwo);
 };
 
 #endif // BLACKJACK_H

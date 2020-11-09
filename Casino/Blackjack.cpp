@@ -10,27 +10,20 @@ void Blackjack::play() {
 
 	while (!gameover) {
 		bool roundOver = false; // New Round Beginning
-
-		display->displayRoundStart(user->getFunds(), round);
-		display->prompt("Please input your bet: ");
-		int bet = user->getBetInput() * BET_MULTIPLIER; // Acquire Bets from Player
-		display->displayBetToConsole(bet);
-
+		int bet = placeBet();
+		
 		dealRoundCards(); // Acquire First 2 Cards for both User && Dealer
 		display->displayHandToConsole(getHandValue(user->getHand()), "User");
 	
 		while (!roundOver) {
 			// Get Input from User -- 'Hit' || 'Fold'
-			display->prompt("Input Move: 'hit' or 'h' || 'fold' or 'f':  ");
-			std::string input = user->getMoveInput();
-			display->displayMoveToConsole(input);
+			std::string input = getMove();
 
 			// Makes a move based on the user input for the current round
 			gamemove(input, roundOver);
 			
 			// Acquires the value of the User's hand for the current round
 			HandValue userHand = getHandValue(user->getHand());
-			display->displayHandToConsole(userHand, "User");
 			
 			// Checks if user has broke or if there is a winner yet. Potentially sets roundOver = true if UserHand breaks 21.
 			processRound(userHand, bet, roundOver);
@@ -50,7 +43,7 @@ void Blackjack::gamemove(std::string input, bool& roundOver) {
 		display->displayCard(newCard);
 	}
 	else if (input == USER_FOLD) {
-		dealer->dealRemainingCards();       // get remaining cards for dealer
+		dealDealersCards();
 		display->displayHandToConsole(getHandValue(dealer->getHand()), "Dealer");
 		roundOver = true;
 	}
@@ -85,17 +78,35 @@ void Blackjack::determineWinner(const HandValue& userHand, int bet) {
 	display->displayWinner(winner, round);
 }
 
-Result Blackjack::compare(const HandValue& userHand, const HandValue& dealerHand) {
+int Blackjack::placeBet() {
+	display->displayRoundStart(user->getFunds(), round);
+	display->prompt(INPUT_BET_MSG);
+
+	int bet = user->getBetInput() * BET_MULTIPLIER; // Acquire Bets from Player
+	display->displayBetToConsole(bet);
+
+	return bet;
+}
+
+std::string Blackjack::getMove() {
+	display->prompt(MOVE_INPUT_MSG);
+	std::string input = user->getMoveInput();
+	display->displayMoveToConsole(input);
+
+	return input;
+}
+
+Result Blackjack::compare(const HandValue& handOne, const HandValue& handTwo) {
 	// Returns a Win right away if the User did not break and the Dealer did
-	if (playerBroke(dealerHand))
+	if (playerBroke(handTwo))
 		return Result::WIN;
 	
 	// The second value is always >= to the first value, so we use it UNLESS it has broken the limit of 21.
-	int userHigh = (userHand.second <= 21 ? userHand.second : userHand.first);
-	int dealerHigh = (dealerHand.second <= 21 ? dealerHand.second : dealerHand.first);
+	int handOneHigh = (handOne.second <= 21 ? handOne.second : handOne.first);
+	int handTwoHigh = (handTwo.second <= 21 ? handTwo.second : handTwo.first);
 	
 	// Simply compares the highest value of both player's hands and returns the result
-	return userHigh > dealerHigh ? Result::WIN : (userHigh < dealerHigh ? Result::LOSS : Result::TIE);
+	return handOneHigh > handTwoHigh ? Result::WIN : (handOneHigh < handTwoHigh ? Result::LOSS : Result::TIE);
 }
 
 
@@ -132,6 +143,8 @@ bool Blackjack::playerBroke(const HandValue& handValue) {
 
 
 void Blackjack::processRound(const HandValue& userHand, int bet, bool& roundOver) {
+	display->displayHandToConsole(userHand, "User");
+
 	// If User breaks -- Immediately Subtract Funds and round is over
 	if (playerBroke(userHand)) {
 		roundOver = true;
@@ -142,6 +155,25 @@ void Blackjack::processRound(const HandValue& userHand, int bet, bool& roundOver
 	// This Flag is triggered only when gamemove sets roundOver to be true --> strictly based off user folding
 	else if (roundOver) {
 		determineWinner(userHand, bet);
+	}
+}
+
+void Blackjack::dealDealersCards() {
+	HandValue dealerHand = getHandValue(dealer->getHand());
+	HandValue userHand;
+
+	// While the dealer has not broke && dealer's hand is less than the players hand, we will continue dealing cards
+	while (!playerBroke(dealerHand)) {
+		HandValue userHand = getHandValue(user->getHand());
+
+		// If Dealer's hand results in a WIN compared to the User's hand, then the dealer does not need anymore cards
+		if (compare(dealerHand, userHand) == Result::WIN)
+			return;
+
+		// Otherwise the Dealer takes a risk of drawing another card in order to beat the User --> can result in the dealer going over 21 which is the condition for our While loop
+		dealer->addCardToHand(dealer->dealCard());
+
+		dealerHand = getHandValue(dealer->getHand());
 	}
 }
 

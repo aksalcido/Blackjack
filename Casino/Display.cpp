@@ -6,136 +6,129 @@ Display::Display() : hConsole(GetStdHandle(STD_OUTPUT_HANDLE)) {
 }
 
 void Display::prompt(std::string msg) {
-	SetConsoleTextAttribute(hConsole, 11);
+	changeColor(Color::LIGHTCYAN);
 	std::cout << msg;
-
-	SetConsoleTextAttribute(hConsole, 15); // Sets Console Text Color back to White
+	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
 void Display::displayRoundStart(int funds, int round) {
 	std::cout << "-----------------------------------" << std::endl;
-
 	std::cout << "Current Funds -- ";
 	
-	SetConsoleTextAttribute(hConsole, 2);
+	changeColor(Color::GREEN);
 	std::cout << "$" << funds;
 
-	SetConsoleTextAttribute(hConsole, 15);
+	changeColor(Color::WHITE);
 	std::cout << " | Round -- ";
 
-	SetConsoleTextAttribute(hConsole, 12);
+	changeColor(Color::LIGHTRED);
 	std::cout << round << std::endl;
 
-	SetConsoleTextAttribute(hConsole, 15);
+	changeColor(Color::WHITE);
 	std::cout << "-----------------------------------" << std::endl;
 
-	SetConsoleTextAttribute(hConsole, 15); // Sets Console Text Color back to White
+	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
 void Display::displayCard(Card* card) {
 	std::cout << "The user just drew a ";
 	int faceValue = card->getFaceValue();
 
-	SetConsoleTextAttribute(hConsole, 7);
-	if (faceValue == 1) {
-		std::cout << "Ace of ";
-	}
-	else if (faceValue == 11) {
-		std::cout << "Jack of ";
-	}
-	else if (faceValue == 12) {
-		std::cout << "Queen of ";
-	}
-	else if (faceValue == 13) {
-		std::cout << "King of ";
-	}
-	else {
-		std::cout << card->getFaceValue() << " of ";
-	}
+	changeColor(Color::LIGHTGRAY);	
+	std::cout << card->getName() << " of ";
 
 	if (card->getSuit() == Suit::Diamond)
 		std::cout << "Diamond";
 
-	if (card->getSuit() == Suit::Club)
+	else if (card->getSuit() == Suit::Club)
 		std::cout << "Club";
 
-	if (card->getSuit() == Suit::Heart)
+	else if (card->getSuit() == Suit::Heart)
 		std::cout << "Heart";
 
-	if (card->getSuit() == Suit::Spade)
+	else if (card->getSuit() == Suit::Spade)
 		std::cout << "Spade";
 
 	std::cout << "\n";
-	SetConsoleTextAttribute(hConsole, 15); // Sets Console Text Color back to White
+	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
 void Display::displayBroke() {
 	std::cout << "The User Broke 21..." << std::endl;
 
-	SetConsoleTextAttribute(hConsole, 15); // Sets Console Text Color back to White
+	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
 void Display::displayWinner(std::string winner, int round) {
-	std::cout << "The winner of Round ";
+	changeColor(Color::LIGHTGREEN);
+	std::cout << "-----------------------------------\n";
+
+	changeColor(Color::WHITE);
+	std::cout << "The WINNER of Round ";
 	
-	SetConsoleTextAttribute(hConsole, 12);
+	changeColor(Color::LIGHTRED);
 	std::cout << round;
 
-	SetConsoleTextAttribute(hConsole, 15);
+	changeColor(Color::WHITE); // Sets Console Text Color back to White
 	std::cout << " is the ";
 
-	SetConsoleTextAttribute(hConsole, 14);
+	changeColor(Color::YELLOW);
 	std::cout << winner << std::endl;
 
-	SetConsoleTextAttribute(hConsole, 15); // Sets Console Text Color back to White
+	changeColor(Color::LIGHTGREEN);
+	std::cout << "-----------------------------------\n\n";
+
+	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
 void Display::displayGameover() {
-	SetConsoleTextAttribute(hConsole, 4);
+	changeColor(Color::RED);
 	std::cout << "GAMEOVER! THE USER HAS WENT BANKRUPT X_X" << std::endl;
 
-	SetConsoleTextAttribute(hConsole, 15); // Sets Console Text Color back to White
+	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
 void Display::displayHandToConsole(const HandValue& handValue, std::string playerStr) const {
 	std::cout << "Current hand of the ";
 
-	SetConsoleTextAttribute(hConsole, 14);
+	changeColor(Color::YELLOW);
 	std::cout << playerStr << ": ";
 	
-	SetConsoleTextAttribute(hConsole, 13);
+	changeColor(Color::LIGHTMAGENTA);
 	std::cout << handValue.first;
 
 	if (handValue.first != handValue.second) {
-		SetConsoleTextAttribute(hConsole, 15);
+		changeColor(Color::WHITE);
 		std::cout << " OR ";
-		SetConsoleTextAttribute(hConsole, 13);
+		changeColor(Color::LIGHTMAGENTA);
 		std::cout << handValue.second;
 	}
 	std::cout << "\n\n";
 
-	SetConsoleTextAttribute(hConsole, 15); // Sets Console Text Color back to White
+	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
 void Display::displayBetToConsole(int bet) const {
 	std::cout << "  ---> Bet made from User: ";
 	
-	SetConsoleTextAttribute(hConsole, 2);
+	changeColor(Color::GREEN);
 	std::cout << "$" << (bet / 2) << "\n" << std::endl;
 
-	SetConsoleTextAttribute(hConsole, 15); // Sets Console Text Color back to White
+	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
 void Display::displayMoveToConsole(std::string userMove) const {
-	SetConsoleTextAttribute(hConsole, 15);
 	std::cout << "  ---> User has chose to: ";
 
-	SetConsoleTextAttribute(hConsole, 3);
+	changeColor(Color::CYAN);
 	std::cout << userMove << "\n" << std::endl;
 
-	SetConsoleTextAttribute(hConsole, 15); // Sets Console Text Color back to White
+	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
+void Display::changeColor(Color color) const {
+	SetConsoleTextAttribute(hConsole, static_cast<int>(color));
+}
 
 Display::~Display() {
 

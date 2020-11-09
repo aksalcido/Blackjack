@@ -7,7 +7,7 @@
 
 typedef std::pair<int, int> HandValue;
 
-enum Color {
+enum class Color {
 	BLUE = 1,
 	GREEN = 2,
 	CYAN = 3,
@@ -62,8 +62,11 @@ public:
 	void displayMoveToConsole(std::string userMove) const;
 
 	~Display();
+
 private:
 	HANDLE hConsole;
+
+	void changeColor(Color color) const;
 };
 
 #endif // DISPLAY_H
