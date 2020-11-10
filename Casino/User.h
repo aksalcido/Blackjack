@@ -19,7 +19,7 @@ public:
 	// Returns an int representing the user's bet. The bet must be within the fund limit.
 	int getBetInput();
 
-	// Returns a string of the user's move: 'hit' || 'fold'
+	// Returns a string of the user's move: 'hit' || 'stand'
 	std::string getMoveInput();
 
 	// Returns a boolean True if the user's funds become <= 0. False otherwise.
@@ -27,13 +27,6 @@ public:
 
 	// User Destructor
 	~User();
-
-private:
-	// Validates the bet input made by the User -- If not enough or bad input -> returns false.
-	bool validateBet();
-
-	// Validates the move input made by the User -- Must be 'Hit' || 'Fold'
-	bool validateInput();
 };
 
 #endif // USER_H

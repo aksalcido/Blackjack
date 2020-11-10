@@ -11,8 +11,14 @@ void Display::prompt(std::string msg) {
 	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
+void Display::newline(int lines) const {
+	for (int i = 0; i < lines; i++) {
+		std::cout << "\n";
+	}
+}
+
 void Display::displayRoundStart(int funds, int round) {
-	std::cout << "-----------------------------------" << std::endl;
+	std::cout << BOXED_LINE;
 	std::cout << "Current Funds -- ";
 	
 	changeColor(Color::GREEN);
@@ -25,13 +31,21 @@ void Display::displayRoundStart(int funds, int round) {
 	std::cout << round << std::endl;
 
 	changeColor(Color::WHITE);
-	std::cout << "-----------------------------------" << std::endl;
+	std::cout << BOXED_LINE;
 
 	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
-void Display::displayCard(Card* card) {
-	std::cout << "The user just drew a ";
+void Display::displayCard(Card* card, std::string playerStr) {
+	std::cout << "The ";
+
+	changeColor(Color::YELLOW);
+	std::cout << playerStr;
+
+	changeColor(Color::WHITE);
+	std::cout << " just drew a ";
+
+
 	int faceValue = card->getFaceValue();
 
 	changeColor(Color::LIGHTGRAY);	
@@ -48,44 +62,54 @@ void Display::displayCard(Card* card) {
 
 	else if (card->getSuit() == Suit::Spade)
 		std::cout << "Spade";
-
-	std::cout << "\n";
+	
+	newline();
 	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
 void Display::displayBroke() {
-	std::cout << "The User Broke 21..." << std::endl;
+	changeColor(Color::RED);
+
+	std::cout << "THE USER BROKE 21!" << std::endl;
 
 	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
 void Display::displayWinner(std::string winner, int round) {
-	changeColor(Color::LIGHTGREEN);
-	std::cout << "-----------------------------------\n";
+	newline();
 
-	changeColor(Color::WHITE);
+	changeColor(Color::LIGHTGREEN);
+	std::cout << BOXED_LINE;
+
+	changeColor(Color::LIGHTGREEN);
 	std::cout << "The WINNER of Round ";
-	
+
 	changeColor(Color::LIGHTRED);
 	std::cout << round;
 
-	changeColor(Color::WHITE); // Sets Console Text Color back to White
+	changeColor(Color::LIGHTGREEN);
 	std::cout << " is the ";
 
 	changeColor(Color::YELLOW);
 	std::cout << winner << std::endl;
 
 	changeColor(Color::LIGHTGREEN);
-	std::cout << "-----------------------------------\n\n";
+	std::cout << BOXED_LINE;
 
+	newline(2);
 	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
-void Display::displayGameover() {
-	changeColor(Color::RED);
-	std::cout << "GAMEOVER! THE USER HAS WENT BANKRUPT X_X" << std::endl;
 
+void Display::displayGameover(bool bankrupt) {
+	changeColor(Color::RED);
+
+	if (bankrupt)
+		std::cout << "GAMEOVER! THE USER HAS WENT BANKRUPT X_X" << std::endl;
+	
 	changeColor(Color::WHITE); // Sets Console Text Color back to White
+
+	std::cout << "Goodbye!" << std::endl;
 }
 
 void Display::displayHandToConsole(const HandValue& handValue, std::string playerStr) const {
@@ -103,17 +127,22 @@ void Display::displayHandToConsole(const HandValue& handValue, std::string playe
 		changeColor(Color::LIGHTMAGENTA);
 		std::cout << handValue.second;
 	}
-	std::cout << "\n\n";
 
+	newline();
 	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
-void Display::displayBetToConsole(int bet) const {
+void Display::displayBetToConsole(int bet, int userFunds) const {
 	std::cout << "  ---> Bet made from User: ";
 	
 	changeColor(Color::GREEN);
-	std::cout << "$" << (bet / 2) << "\n" << std::endl;
 
+	if (bet >= userFunds)
+		std::cout << "THE USER IS GOING ALL IN WITH: $" << userFunds;
+	else
+		std::cout << "$" << bet;
+
+	newline(2);
 	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
@@ -128,6 +157,19 @@ void Display::displayMoveToConsole(std::string userMove) const {
 
 void Display::changeColor(Color color) const {
 	SetConsoleTextAttribute(hConsole, static_cast<int>(color));
+}
+
+void Display::checkForQuit(bool& gameover) {
+	// The User only has the option of continuing if it is not already gameover
+	if (!gameover) {
+		prompt("Type anything to continue the game OR 'q' to quit: ");
+
+		std::string buffer;
+		std::cin >> buffer;
+
+		if (buffer == "q")
+			gameover = true;
+	}
 }
 
 Display::~Display() {

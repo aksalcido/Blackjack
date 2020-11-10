@@ -1,6 +1,6 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
-
+#pragma once
 #include <iostream>
 #include <Windows.h>
 #include "Card.h"
@@ -25,7 +25,8 @@ enum class Color {
 	WHITE = 15
 };
 
-#pragma once
+const std::string BOXED_LINE = "-----------------------------------\n";
+
 class Display
 {
 public:
@@ -36,11 +37,14 @@ public:
 	// Displays to the User a prompted msg argument
 	void prompt(std::string msg);
 
+	// Displays a newline to the console
+	void newline(int lines = 1) const;
+
 	// Displays the total 'funds' of the User and the current 'round'
 	void displayRoundStart(int funds, int round);
 
 	// Displays the contents of the card as it is drawn
-	void displayCard(Card* card);
+	void displayCard(Card* card, std::string playerStr);
 
 	// Displays when the User broke 21
 	void displayBroke();
@@ -49,17 +53,19 @@ public:
 	void displayWinner(std::string winner, int round);
 
 	// Displays a simple GAMEOVER message
-	void displayGameover();
+	void displayGameover(bool bankrupt);
 
 	/* ===== Console Display Methods ===== */
 	// Displays the hand value to the console which can be either from User or Dealer and that is represented by 'playerStr'
 	void displayHandToConsole(const HandValue& handValue, std::string playerStr) const;
 
 	// Displays the bet made by the user: 'bet' to the console
-	void displayBetToConsole(int bet) const;
+	void displayBetToConsole(int bet, int userFunds) const;
 
 	// Displays the move made by the user: 'userMove' to the console
 	void displayMoveToConsole(std::string userMove) const;
+
+	void checkForQuit(bool& gameover);
 
 	~Display();
 
