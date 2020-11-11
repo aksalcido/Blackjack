@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#pragma once
+#include <iostream>
 #include "Hand.h"
 
 class Player
@@ -14,6 +14,7 @@ public:
 	// (e.g User, Dealer, AI, etc)
 	Player(int funds);
 
+	// Player copy constructor
 	Player(const Player& p);
 
 	// Adds the Card* argument to the hand of the player.

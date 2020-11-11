@@ -1,8 +1,7 @@
-#include <iostream>
 #include "Blackjack.h"
 
 constexpr int BASE_FUNDS = 500;
-constexpr int DEALER_FUNDS = INT_MAX;
+constexpr int DEALER_FUNDS = 1000000;
 
 int main() {
 	User* user = new User(BASE_FUNDS);

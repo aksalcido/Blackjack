@@ -1,8 +1,6 @@
 #ifndef USER_H
 #define USER_H
 
-#pragma once
-#include <iostream>
 #include <string>
 #include "Player.h"
 

@@ -1,10 +1,8 @@
 #ifndef DEALER_H
 #define DEALER_H
 
-#pragma once
 #include "Player.h"
 #include "Deck.h"
-#include <iostream>
 
 typedef std::pair<int, int> HandValue;
 

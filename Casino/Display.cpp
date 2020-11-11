@@ -5,7 +5,7 @@ Display::Display() : hConsole(GetStdHandle(STD_OUTPUT_HANDLE)) {
 	
 }
 
-void Display::prompt(std::string msg) {
+void Display::prompt(std::string msg) const {
 	changeColor(Color::LIGHTCYAN);
 	std::cout << msg;
 	changeColor(Color::WHITE); // Sets Console Text Color back to White
@@ -17,7 +17,7 @@ void Display::newline(int lines) const {
 	}
 }
 
-void Display::displayRoundStart(int funds, int round) {
+void Display::displayRoundStart(int funds, int round) const {
 	std::cout << BOXED_LINE;
 	std::cout << "Current Funds -- ";
 	
@@ -36,7 +36,7 @@ void Display::displayRoundStart(int funds, int round) {
 	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
-void Display::displayCard(Card* card, std::string playerStr) {
+void Display::displayCard(Card* card, std::string playerStr) const {
 	std::cout << "The ";
 
 	changeColor(Color::YELLOW);
@@ -67,7 +67,7 @@ void Display::displayCard(Card* card, std::string playerStr) {
 	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
-void Display::displayBroke() {
+void Display::displayBroke() const {
 	changeColor(Color::RED);
 
 	std::cout << "THE USER BROKE 21!" << std::endl;
@@ -75,7 +75,7 @@ void Display::displayBroke() {
 	changeColor(Color::WHITE); // Sets Console Text Color back to White
 }
 
-void Display::displayWinner(std::string winner, int round) {
+void Display::displayWinner(std::string winner, int round) const {
 	newline();
 
 	changeColor(Color::LIGHTGREEN);
@@ -101,11 +101,11 @@ void Display::displayWinner(std::string winner, int round) {
 }
 
 
-void Display::displayGameover(bool bankrupt) {
+void Display::displayGameover(bool bankrupt) const {
 	changeColor(Color::RED);
 
 	if (bankrupt)
-		std::cout << "GAMEOVER! THE USER HAS WENT BANKRUPT X_X" << std::endl;
+		std::cout << GAMEOVER_MSG;
 	
 	changeColor(Color::WHITE); // Sets Console Text Color back to White
 
@@ -133,7 +133,7 @@ void Display::displayHandToConsole(const HandValue& handValue, std::string playe
 }
 
 void Display::displayBetToConsole(int bet, int userFunds) const {
-	std::cout << "  ---> Bet made from User: ";
+	std::cout << INPUT_ARROW << "Bet made from User: ";
 	
 	changeColor(Color::GREEN);
 
@@ -147,7 +147,7 @@ void Display::displayBetToConsole(int bet, int userFunds) const {
 }
 
 void Display::displayMoveToConsole(std::string userMove) const {
-	std::cout << "  ---> User has chose to: ";
+	std::cout << INPUT_ARROW << "User has chose to: ";
 
 	changeColor(Color::CYAN);
 	std::cout << userMove << "\n" << std::endl;
@@ -159,7 +159,7 @@ void Display::changeColor(Color color) const {
 	SetConsoleTextAttribute(hConsole, static_cast<int>(color));
 }
 
-void Display::checkForQuit(bool& gameover) {
+void Display::checkForQuit(bool& gameover) const {
 	// The User only has the option of continuing if it is not already gameover
 	if (!gameover) {
 		prompt("Type anything to continue the game OR 'q' to quit: ");

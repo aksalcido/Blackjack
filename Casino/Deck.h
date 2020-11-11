@@ -1,14 +1,12 @@
 #ifndef DECK_H
 #define DECK_H
 
-#pragma once
-#include <vector>
 #include <iostream>
+#include <vector>
 #include <algorithm>
 #include <random>
 
 #include "Card.h"
-#include "Suit.h"
 
 constexpr int DECK_SIZE = 52;
 

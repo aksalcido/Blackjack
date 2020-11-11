@@ -1,31 +1,16 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
-#pragma once
+
 #include <iostream>
 #include <Windows.h>
 #include "Card.h"
+#include "Color.h"
 
 typedef std::pair<int, int> HandValue;
 
-enum class Color {
-	BLUE = 1,
-	GREEN = 2,
-	CYAN = 3,
-	RED = 4,
-	MAGENTA = 5,
-	BROWN = 6,
-	LIGHTGRAY = 7,
-	DARKGRAY = 8,
-	LIGHTBLUE = 9,
-	LIGHTGREEN = 10,
-	LIGHTCYAN = 11,
-	LIGHTRED = 12,
-	LIGHTMAGENTA = 13,
-	YELLOW = 14,
-	WHITE = 15
-};
-
-const std::string BOXED_LINE = "-----------------------------------\n";
+constexpr char BOXED_LINE[]  = "-----------------------------------\n";
+constexpr char INPUT_ARROW[] = "  ---> ";
+constexpr char GAMEOVER_MSG[] = "GAMEOVER! THE USER HAS WENT BANKRUPT X_X\n";
 
 class Display
 {
@@ -35,25 +20,25 @@ public:
 	Display();
 
 	// Displays to the User a prompted msg argument
-	void prompt(std::string msg);
+	void prompt(std::string msg) const;
 
 	// Displays a newline to the console
 	void newline(int lines = 1) const;
 
 	// Displays the total 'funds' of the User and the current 'round'
-	void displayRoundStart(int funds, int round);
+	void displayRoundStart(int funds, int round) const;
 
 	// Displays the contents of the card as it is drawn
-	void displayCard(Card* card, std::string playerStr);
+	void displayCard(Card* card, std::string playerStr) const;
 
 	// Displays when the User broke 21
-	void displayBroke();
+	void displayBroke() const;
 
 	// Displays the winner argument to the console for the current 'round' argument
-	void displayWinner(std::string winner, int round);
+	void displayWinner(std::string winner, int round) const;
 
 	// Displays a simple GAMEOVER message
-	void displayGameover(bool bankrupt);
+	void displayGameover(bool bankrupt) const;
 
 	/* ===== Console Display Methods ===== */
 	// Displays the hand value to the console which can be either from User or Dealer and that is represented by 'playerStr'
@@ -65,7 +50,7 @@ public:
 	// Displays the move made by the user: 'userMove' to the console
 	void displayMoveToConsole(std::string userMove) const;
 
-	void checkForQuit(bool& gameover);
+	void checkForQuit(bool& gameover) const;
 
 	~Display();
 

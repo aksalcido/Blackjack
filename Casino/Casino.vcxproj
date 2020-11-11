@@ -152,11 +152,13 @@
   <ItemGroup>
     <ClInclude Include="Blackjack.h" />
     <ClInclude Include="Card.h" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="Dealer.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="Hand.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Result.h" />
     <ClInclude Include="Suit.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>

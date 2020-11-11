@@ -1,10 +1,8 @@
 #ifndef HAND_H
 #define HAND_H
 
-#pragma once
 #include <vector>
 #include "Card.h"
-
 
 class Hand
 {
@@ -19,6 +17,7 @@ public:
 	// Adds the Card* argument to the hand vector.
 	void addCardToHand(Card* card);
 
+	// Returns the Hand's vector of cards so that we are able to calculate the value of the hand
 	std::vector<Card*> getHand() const;
 
 	~Hand();
