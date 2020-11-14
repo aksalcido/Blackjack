@@ -2,7 +2,7 @@
 A simple in-console Blackjack application to refresh C++ memory management and OOP skills. The User starts with $500 funds to play the game and can bet any amount within their funds. If the User uses all of their funds in one round and loses, that will then lead to going bankrupt which will result in a Gameover.
 
 # How to Play #
-Follows the normal rules of Blackjack:
+Follows the normal rules of Blackjack: <br />
   (1) User makes bet within their $funds. Betting all funds means going ALL IN which can lead to Bankruptcy if they lose that round. <br />
   (2) The Dealer deals 2 cards to the User and themselves. Cards are displayed, but ONE of the Dealer's card is not shown, only the first one is shown. <br />
   (3) HandValues of both User and dealer displayed. If either hand contains an ace, it displays both possible values as the following: "1 OR 11" meaning you use either value as you want. <br />
