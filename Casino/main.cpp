@@ -9,6 +9,8 @@ int main() {
 	Display* display = new Display();
 
 	Blackjack blackjack(user, dealer, display);
+	display->welcomeSreen();
+
 	blackjack.play();
 
 	delete user;

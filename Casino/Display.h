@@ -18,6 +18,8 @@ public:
 	// Initializes a Display object that handles all of the console printing. This object prevents multiple std::cout statements
 	// on the Blackjack.cpp file. As well as importing <Windows.h> to handle the color of the console printing using the HANDLE hConsole.
 	Display();
+	
+	void welcomeSreen() const;
 
 	// Displays to the User a prompted msg argument
 	void prompt(std::string msg) const;

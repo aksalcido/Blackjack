@@ -5,6 +5,19 @@ Display::Display() : hConsole(GetStdHandle(STD_OUTPUT_HANDLE)) {
 	
 }
 
+void Display::welcomeSreen() const {
+	changeColor(Color::YELLOW); // Sets Console Text Color back to White
+	std::cout << "=======================================================================================" << std::endl;
+	std::cout << "| BBBBBB   LL       AAAAAAA  CCCCCCC  KK    KK        JJ  AAAAAAA  CCCCCCC  KK    KK  |" << std::endl;
+	std::cout << "| BB   BB  LL       AA   AA  CC       KK  KK          JJ  AA   AA  CC       KK  KK    |" << std::endl;
+	std::cout << "| BBBBBB   LL       AAAAAAA  CC       KKKK      JJ    JJ  AAAAAAA  CC       KKKK      |" << std::endl;
+	std::cout << "| BB   BB  LL       AA   AA  CC       KK  KK    JJ    JJ  AA   AA  CC       KK  KK    |" << std::endl;
+	std::cout << "| BBBBBB   LLLLLLL  AA   AA  CCCCCCC  KK    KK  JJJJJJJJ  AA   AA  CCCCCCC  KK    KK  |" << std::endl;
+	std::cout << "=======================================================================================" << std::endl;
+
+	changeColor(Color::WHITE); // Sets Console Text Color back to White
+}
+
 void Display::prompt(std::string msg) const {
 	changeColor(Color::LIGHTCYAN);
 	std::cout << msg;
